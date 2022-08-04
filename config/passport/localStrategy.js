@@ -11,7 +11,7 @@ export const localStrategySignup = new localStrategy(
   },
   async (req, email, password, done) => {
     try {
-      console.log('entered signup strategy');
+
       const name = req.body.name;
       const user = await User.create({ name, email, password });
 

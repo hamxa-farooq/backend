@@ -1,3 +1,3 @@
-export * from './draft.controller';
-export * from './post.controller';
-export * from './userController';
+export * from './draft.controller.js';
+export * from './post.controller.js';
+export * from './userController.js';

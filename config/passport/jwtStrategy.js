@@ -6,7 +6,7 @@ const JWTstrategy = passportJWT.Strategy
 export default new JWTstrategy(
     {
         secretOrKey: 'TOP_SECRET',
-        jwtFromRequest: ExtractJwt.fromUrlQueryParameter('secret_token'),
+        jwtFromRequest: ExtractJwt.fromHeader('secret_token'),
     },
     async (token, done) => {
         try{

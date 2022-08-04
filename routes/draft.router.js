@@ -1,23 +1,30 @@
 import express from 'express';
-const router = express.Router();
+import passport from 'passport';
+
+import { param } from 'express-validator';
+
+import validatePost from '../middlewares/validation.js'
+import handleValidations from '../middlewares/handleValidations.js';
+import authorizePost from '../middlewares/authorizePost.js';
+
 import {
-  getDrafts,
-  addDraft,
-  updateDraft,
-  deleteDraft,
-  deleteAllDrafts,publishDraft,
-} from '../contollers';
+  getPosts,
+  addPost,
+  updatePost,
+  deletePost,
+  publishDraft,
+} from '../contollers/index.js';
+import validate from '../middlewares/validation.js';
 
-router.get('/:userId', getDrafts);
+const router = express.Router();
 
-router.post('/add', addDraft);
 
-router.put('/:id/update', updateDraft);
+router.get('/:userId', passport.authenticate('jwt', {session: false}), validatePost('getPosts'), handleValidations, authorizePost('get'), getPosts);
+router.post('/', passport.authenticate('jwt', {session: false}), validatePost('addPost'), handleValidations, addPost);
+router.put('/:id', passport.authenticate('jwt', {session: false}), validatePost('updatePost'), handleValidations, authorizePost('put'), updatePost);
+router.delete('/:id', passport.authenticate('jwt', {session: false}), validatePost('deletePost'), handleValidations, authorizePost('put'), deletePost);
+router.put('/:id/publish', validate('publishDraft'), handleValidations, authorizePost('put'), publishDraft);
 
-router.delete('/:id/delete', deleteDraft);
 
-router.delete('/:userId/delete/all', deleteAllDrafts);
-
-router.post('/:id/publish', publishDraft);
 
 export default router;

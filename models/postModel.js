@@ -6,7 +6,7 @@ const postSchema = new Schema({
         type: String,
         required: true,
     },
-    content:{
+    body:{
         type: String,
         required: true,
     },
